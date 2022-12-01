@@ -21,6 +21,14 @@ function Menu(show, option){
         }
     }
 
+
+
+}
+
+function verificarUsuario(){
+    document.getElementById('home').classList.remove('hide');
+    document.getElementById('RegistroUsuario').classList.add('hide');
+
 }
 
 
