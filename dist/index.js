@@ -12,6 +12,7 @@ const app = (0, express_1.default)();
 const port = process.env.PORT;
 app.use(express_1.default.json()); // mapea la inf en formato json
 app.use(express_1.default.urlencoded({ extended: true })); // en url
+app.use(express_1.default.static("public"));
 app.set('view engine', 'ejs');
 app.use(body_parser_1.default.text());
 app.use('/', router_1.default);

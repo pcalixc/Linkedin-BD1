@@ -12,7 +12,7 @@ const port = process.env.PORT;
 app.use(express.json()); // mapea la inf en formato json
 app.use(express.urlencoded({extended:true})); // en url
 
-
+app.use(express.static("public"))
 app.set('view engine', 'ejs');
 app.use(bodyParser.text());
 
