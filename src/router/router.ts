@@ -1,22 +1,59 @@
 
+import oracledb from 'oracledb';
 import express, { Express, Request, Response } from 'express';
-import knex from 'knex';
 var router= express.Router();
+const app: Express = express();
+const port = process.env.PORT;
+export let connection: any;
+let result :any;
 
-import  moduleknex  from '../modules/dbConfig';
 
 
+router.get('/usuarios',async function(req, res){
+   selectUsers(req,res)
+})
 
-router.get('/hh',async(req, res)=>{
-    res.send()})
+
+async function selectUsers(req: any, res:any) {
+  try {
+    connection = await oracledb.getConnection({
+      user: "SYSTEM",
+      password: "0000",
+      connectString: "localhost:1521/xepdb1"
+    });
+    console.log('connected to database on router');
+
+    result = await connection.execute(`SELECT  PERSON.correo , USUARIO.password, PERSON.id, USUARIO.ID FROM Usuario 
+    INNER JOIN PERSON  ON USUARIO.persona_id= PERSON.id`)
+
+
   
 
-    //let b = JSON.parse(req.body).data;
-    //res.render('pages/test', {result: {result,b}});
-    //res.status=200;
+  } catch (err) {
+    return res.send(err);
+  } finally {
+    if (connection) {
+      try {
+
+        await connection.close();
+        console.log('close connection success');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (result.rows.length == 0) {
+
+      return res.send('query send no rows');
+    } else {
+     
+      return res.send(result.rows);
+    }
+  }
+}
 
 
-//})
 
 
+
+app.listen(port, () => console.log("nodeOracleRestApi app listening on port %s!", port))
 export default router;

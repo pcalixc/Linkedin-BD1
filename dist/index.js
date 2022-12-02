@@ -7,16 +7,16 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const router_1 = __importDefault(require("./router/router"));
+const database_1 = require("./modules/database");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 app.use(express_1.default.json()); // mapea la inf en formato json
 app.use(express_1.default.urlencoded({ extended: true })); // en url
 app.use(express_1.default.static("public"));
-app.set('view engine', 'ejs');
 app.use(body_parser_1.default.text());
 app.use('/', router_1.default);
-//Database();
+(0, database_1.CheckConnection)();
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
 });
