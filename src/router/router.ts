@@ -22,6 +22,45 @@ router.get('/seguidores',async function(req, res){
   selectSeguidores(req,res)
 })
 
+router.get('/grupos',async function(req, res){
+  selectGrupos(req,res)
+})
+
+//----------------------------FUNCIONES 
+
+async function selectGrupos(req: any, res:any) {
+  try {
+    connection = await oracledb.getConnection({
+      user: "SYSTEM",
+      password: "0000",
+      connectString: "localhost:1521/xepdb1"
+    });
+    console.log('connected to database on router');
+
+    result = await connection.execute(`SELECT * FROM GRUPO`)
+
+  } catch (err) {
+    return res.send(err);
+  } finally {
+    if (connection) {
+      try {
+
+        await connection.close();
+        console.log('close connection success');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (result.rows.length == 0) {
+
+      return res.send('query send no rows');
+    } else {
+     
+      return res.send(result.rows);
+    }
+  }
+}
+
 async function selectSeguidores(req: any, res:any) {
   try {
     connection = await oracledb.getConnection({
@@ -33,7 +72,7 @@ async function selectSeguidores(req: any, res:any) {
 
     result = await connection.execute(`    
     SELECT * FROM SOLICITUD 
-    WHERE solicitud.estado='S'`)
+   `)
 
   } catch (err) {
     return res.send(err);

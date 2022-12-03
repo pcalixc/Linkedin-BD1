@@ -5,6 +5,7 @@ let mensajes;
 let publicaciones;
 let invitaciones;
 let seguidos;
+let grupos
 
 const cargarUsuarios= async () => {
     const respuesta = await fetch('/usuarios', {
@@ -33,6 +34,15 @@ const cargarPublicaciones= async () => {
     
         }
         cargarMensajes();
+
+        const cargarGrupos= async () => {
+            const respuesta = await fetch('/grupos', {
+                method: "get"});
+                grupos = await respuesta.json();
+                console.log('mensajes', grupos)
+        
+            }
+            cargarGrupos();
 
 function verificarUsuario(){
     let enteredUser= document.getElementById("user").value;
@@ -68,14 +78,16 @@ function SetHomeScreen(){
         document.getElementById("home-screen").innerHTML+=
         `            <div class="hs-menu-profile">
                 <div class="menu">
-                    <div class="button-active" id="opt-posts" onclick="Menu('posts-space','opt-posts')"><i class="fa-solid fa-house"></i></i>Inicio</div>
-                    <div id="opt-invitations" onclick="Menu('mr-invitations','opt-invitations')"><i class="fa-solid fa-users"></i>Mi red</div>
-                    <div id="opt-contacts" onclick="Menu('mr-contacts','opt-contacts')"><i class="fa-solid fa-address-book"></i>Contactos</div>
-                    <div id="opt-groups" onclick="Menu('mr-groups','opt-groups')"><i class="fa-solid fa-users-line"></i>Grupos</div>
-                    <div id="opt-notifications" onclick="Menu('mr-notifications','opt-notifications')"><i class="fa-solid fa-bell"></i>Notificaciones</div>
-                    <div ><i class="fa-solid fa-suitcase"></i>Empleos</div>
-                    <div ><i class="fa-solid fa-message"></i>Mensajes</div>
-                    <div ><i class="fa-solid fa-bars"></i></i>Ajustes</div>
+
+                <div class="button-active" id="opt-posts" onclick="Menu('posts-space','opt-posts')"><i class="fa-solid fa-house"></i></i>Inicio</div>
+                <div id="opt-invitations" onclick="Menu('mr-invitations','opt-invitations')"><i class="fa-solid fa-users"></i>Mi red</div >
+                <div id="opt-contacts" onclick="Menu('mr-contacts','opt-contacts')"><i class="fa-solid fa-address-book"></i>Contactos</div >
+                <div id="opt-groups" onclick="Menu('mr-groups','opt-groups')"><i class="fa-solid fa-users-line"></i>Grupos</div>
+                <div id="opt-notifications" onclick="Menu('mr-notifications','opt-notifications')"><i class="fa-solid fa-bell"></i>Notificaciones</div>
+                <div id="opt-jobs" onclick="Menu('mr-jobs','opt-jobs')"><i class="fa-solid fa-suitcase"></i>Empleos</div>
+                <div id="opt-mensajes" onclick="Menu('mr-messages','opt-mensajes')"><i class="fa-solid fa-message"></i>Mensajes</div>
+                <div ><i class="fa-solid fa-bars"></i></i>Ajustes</div>
+
                 </div>
                 <div class="profile-info">
                     <div class="profile-info-img"> <img style="width: 70px; height:80px" src="/img/messi.jpg" alt=""></div>
@@ -105,6 +117,7 @@ function SetHomeScreen(){
         <div class="mr-invitations hide" id="mr-invitations">
             <div class="mi-red-invitationes ">
                 <div class="invitations" id="invitations">  
+
                 </div>
                 <div class="may-know"><h5>Personas que quizas conozcas</h5>
                     <div class="mk-card">
@@ -126,14 +139,28 @@ function SetHomeScreen(){
 
         <div class="mr-groups hide" id="mr-groups">
             <div class="mi-red-groups">
-                <div class="groups"><h5>Grupos</h5>     
+                <div class="groups" id="groups"><h5>Grupos</h5>     
                 </div>
             </div>
         </div>
 
         <div class="mr-notifications hide" id="mr-notifications">
             notif
-        </div>`
+        </div>
+
+        <div class="mr-jobs hide" id="mr-jobs">
+        jobs
+    </div>
+
+    <div class="mr-messages hide" id="mr-messages">
+    messages
+</div>
+        
+        
+        
+        `
+
+
         document.getElementById("all-posts").innerHTML+=``
         for(i=0; i<publicaciones.length-16;i++){
         let Id= publicaciones[i][4];
@@ -173,7 +200,7 @@ function SetHomeScreen(){
                     <div class="ms-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil.png" alt="" ></div>
                     <div class="ms-content">
                         <div class="ms-content-name">Banco Atlantida</div>
-                        <div style="font-size: x-small;" class="ms-content-text">Duis proin eu sagittis fermentum eget pharetra.</div>
+                        <div </div>
                     </div>
                     </div>  
               `
@@ -193,6 +220,18 @@ function SetHomeScreen(){
                   <div class="ignore-invitation">ignorar</div>
               </div> 
           </div>`
+
+          document.getElementById("groups").innerHTML+=``
+
+          document.getElementById("groups").innerHTML+=
+
+          `<div class="group">
+          <div class="group-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/grupo.jpg" alt="" ></div>
+          <div class="group-content">
+              <div class="group-name">Finance Club</div>
+              <div style="font-size: x-small;" class="group-text">grupo fjdjk.</div>
+          </div>
+  </div>`
        
   
 
@@ -209,20 +248,22 @@ function Menu(show, option){
     document.getElementById(show).classList.remove('hide');
     document.getElementById(option).classList.add('button-active');
 
-    tags=['posts-space','mr-invitations','mr-contacts','mr-groups','mr-notifications']
-    tags1=['opt-posts','opt-invitations','opt-contacts','opt-groups','opt-notifications']
+    tags=['posts-space','mr-invitations','mr-contacts','mr-groups','mr-notifications', 'mr-jobs', 'mr-messages']
+    tags1=['opt-posts','opt-invitations','opt-contacts','opt-groups','opt-notifications','opt-jobs','opt-mensajes']
 
-    for(i=0; i<5; i++){
+    for(i=0; i<7; i++){
         if(tags[i]!=show && document.getElementById(tags[i]).classList.value!=`${tags[i]} hide`){
             document.getElementById(tags[i]).classList.add('hide');
         }
     }
 
-    for(i=0; i<5; i++){
+    for(i=0; i<7; i++){
         if(tags1[i]!=option && document.getElementById(tags1[i]).classList.value==`button-active` ){
             document.getElementById(tags1[i]).classList.remove('button-active');
+
         }
     }
+
 }
 
 
