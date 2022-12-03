@@ -1,6 +1,7 @@
 
 let usuarioActual;
 let usuarios;
+let mensajes;
 let publicaciones;
 let invitaciones;
 let seguidos;
@@ -24,13 +25,22 @@ const cargarPublicaciones= async () => {
     }
     cargarPublicaciones();
 
+    const cargarMensajes= async () => {
+        const respuesta = await fetch('/mensajes', {
+            method: "get"});
+            mensajes = await respuesta.json();
+            console.log('mensajes', mensajes)
+    
+        }
+        cargarMensajes();
+
 function verificarUsuario(){
     let enteredUser= document.getElementById("user").value;
     let enteredPassword=document.getElementById("password").value;
 
     for (i=0; i<usuarios.length;i++){
         if (usuarios[i][0] ==enteredUser && usuarios[i][1]==enteredPassword) {
-            usuarioActual=[`${enteredUser}`,`${enteredPassword}`, `${usuarios[i][2]}`,`${usuarios[i][3]}`,`${usuarios[i][4]}` ]
+            usuarioActual=[`${enteredUser}`,`${enteredPassword}`, `${usuarios[i][2]}`,`${usuarios[i][3]}`,`${usuarios[i][4]}`,`${i}` ]
         }     }
         console.log(usuarioActual)
 
@@ -77,6 +87,9 @@ function SetHomeScreen(){
             <div class="changing hide" id="changing">
             </div>
             <div class="hs-messages" id=hs-messages>
+                <div class="messages-header"><h3>Mensajes</h3></div>
+                <div class="messages" id="messages">
+                </div>
             </div>`
             document.getElementById("changing").innerHTML+=``
             document.getElementById("changing").innerHTML+=`
@@ -91,7 +104,7 @@ function SetHomeScreen(){
 
         <div class="mr-invitations hide" id="mr-invitations">
             <div class="mi-red-invitationes ">
-                <div class="invitations ">  
+                <div class="invitations" id="invitations">  
                 </div>
                 <div class="may-know"><h5>Personas que quizas conozcas</h5>
                     <div class="mk-card">
@@ -152,18 +165,35 @@ function SetHomeScreen(){
     </div>
         `}
 
-            document.getElementById("hs-messages").innerHTML+=``
-            document.getElementById("hs-messages").innerHTML+=`
-            <div class="messages-header"><h3>Mensajes</h3></div>
-            <div class="messages">
+            document.getElementById("messages").innerHTML+=``
+
+                document.getElementById("messages").innerHTML+=`
+           
                 <div class="message">
-                    <div class="ms-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil2.jpeg" alt="" ></div>
+                    <div class="ms-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil.png" alt="" ></div>
                     <div class="ms-content">
                         <div class="ms-content-name">Banco Atlantida</div>
                         <div style="font-size: x-small;" class="ms-content-text">Duis proin eu sagittis fermentum eget pharetra.</div>
                     </div>
-                </div>
-            </div>`
+                    </div>  
+              `
+              document.getElementById("invitations").innerHTML+=``
+
+              document.getElementById("invitations").innerHTML+=`
+              <div class="invitation">
+              <div class="invitacion-left">
+                  <div class="inv-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil2.jpeg" alt="" ></div>
+                  <div class="inv-content">
+                      <div class="inv-name">Banco Atlantida</div>
+                      <div style="font-size: x-small;" class="inv-text">Economista.</div>
+                  </div>
+              </div>
+              <div class="invitacion-rigth">
+                  <div class="acept-invitation">Aceptar</div>
+                  <div class="ignore-invitation">ignorar</div>
+              </div> 
+          </div>`
+       
   
 
 
