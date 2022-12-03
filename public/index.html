@@ -35,9 +35,40 @@
                         </div> 
                         
                 </form>
-                <div class="nueva-cuenta" onclick="crearCuenta()">
-                    <p style="font-size: small;">¿No tienes una cuenta? <strong>Únete</strong></p>
+                <div class="nueva-cuenta">
+                    <p style="font-size: small;">¿No tienes una cuenta? <strong type="button" onclick="PantallaCrearCuenta()">Únete</strong></p>
                 </div>
+            </div>
+        </div>
+
+        <div class="new-acc-screen hide" id="new-acc-screen">
+            <div class="sign-in-card">
+                <div class="sign-in-card-header">
+                    <h3 >Crear Cuenta</h3>
+                    <h8 style="color: gray" >Mantente al día de tu mundo profesional</h8>
+                </div>
+                <form class="sign-in-form">
+                        <div class="mb-3">
+                            <labe  for="exampleInputEmail1" class="form-label">Nombre</labe>
+                            <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="nombre-nueva-cuenta" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <labe  for="exampleInputEmail1" class="form-label">Apellido</labe>
+                            <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="apellido-nueva-cuenta" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <labe  for="exampleInputEmail1" class="form-label">Correo</labe>
+                            <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="correo-nueva-cuenta" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                            <input style="background-color: #e5e5e53d;" type="password" class="form-control" id="password-nueva-cuenta">
+                        </div>
+                        <div>
+                            <div onclick="CrearNuevaCuenta()" class="sign-in-button"><p>Crear</p></div>
+                        </div> 
+                        
+                </form>
             </div>
         </div>
         
@@ -68,6 +99,7 @@
                     <div>Oficial de Recursos Humanos</div>
                 </div>
             </div>
+            
 
             <div class="changing hide">
                 <div class="posts-space " id="posts-space">

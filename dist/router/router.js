@@ -16,6 +16,21 @@ router.get('/usuarios', async function (req, res) {
 router.get('/publicaciones', async function (req, res) {
     selectPublicaciones(req, res);
 });
+router.post("/nuevousuario", async function (req, res) {
+    try {
+        exports.connection = await oracledb_1.default.getConnection({
+            user: "SYSTEM",
+            password: "0000",
+            connectString: "localhost:1521/xepdb1"
+        });
+        console.log('connected to database on router');
+        result = await exports.connection.execute(`INSERT INTO  Person (ID, P_NOMBRE,P_APELLIDO,CORREO)  VALUES (:id, :pnombre, :papellido', :correo)`, [req.body.ID, req.body.P_NOMBRE, req.body.P_APELLIDO, req.body.CORREO], { autoCommit: true });
+        res.send(result);
+    }
+    catch (err) {
+        return res.send(err);
+    }
+});
 async function selectUsers(req, res) {
     try {
         exports.connection = await oracledb_1.default.getConnection({
@@ -24,7 +39,7 @@ async function selectUsers(req, res) {
             connectString: "localhost:1521/xepdb1"
         });
         console.log('connected to database on router');
-        result = await exports.connection.execute(`SELECT  PERSON.correo , USUARIO.password, PERSON.P_Nombre ,USUARIO.informacion_adicional, USUARIO.siguiendo, USUARIO.invitaciones FROM Usuario 
+        result = await exports.connection.execute(`SELECT  PERSON.correo , USUARIO.password, PERSON.P_Nombre ,USUARIO.informacion_adicional, PERSON.P_APELLIDO FROM Usuario 
     INNER JOIN PERSON  ON USUARIO.persona_id= PERSON.id`);
     }
     catch (err) {

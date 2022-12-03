@@ -17,6 +17,14 @@
     height: 100%;
 }
 
+.new-acc-screen{
+    background-color: var(--gray);
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .LinkedinHeader{
     height: 7vh;
     background-color: white;
@@ -178,8 +186,8 @@ border-radius: 10px;
 }
 
 .changing .create-post{
-    color: gray;
     
+    color: gray;
     background-color: white;
     margin: 15px;
     height: 10%;
@@ -191,11 +199,14 @@ border-radius: 10px;
 .changing .all-posts{
     padding: 15px;
     margin: 15px;
+    height: 70vh;
+    overflow:auto;
 }
 
 .post{
     background-color: white;
     border-radius: 15px;
+    margin: 10px;
 }
 
 .post .post-profile-info{
