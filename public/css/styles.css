@@ -94,6 +94,25 @@ padding: 5px;
     text-decoration: none;
     color: white;
 }
+#aply{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px;
+    width: 110px;
+    height: 34px;
+    background: var(--blue)   ;
+    /* Sombra  */
+    box-shadow: 0px 4px 8px rgba(89, 73, 30, 0.16);
+    border: none;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
 
 .nueva-cuenta{
     margin-top: 5px;
@@ -269,6 +288,13 @@ margin: 15px;
     gap: 30px;
 }
 
+.mi-red-jobs{
+    display: grid;
+    grid-template-rows: 2fr 3fr;
+    height: 95%;
+    gap: 30px;
+}
+
 
 .invitations {
     background-color: white;
@@ -279,17 +305,34 @@ margin: 15px;
     margin-top: 20px;
     width:60vw ;
     margin-bottom: 30px;
-    
+    scroll-behavior: auto;
+   
 
 }
-.invitation {
+.jobs {
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 20px;
+    width:60vw ;
+    margin-bottom: 30px;
+    height: 80vh;
+    overflow:auto;
+}
+
+.invitation {
+    background-color: var(--gray);
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 10px;
     border-radius: 15px;
     margin: 10px;
+
 }
+
+
 
 
 .invitacion-left{

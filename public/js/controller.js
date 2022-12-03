@@ -5,14 +5,22 @@ let mensajes;
 let publicaciones;
 let invitaciones;
 let seguidos;
-let grupos
+let grupos;
+let empleos;
+
+
+const cargarEmpleos= async () => {
+    const respuesta = await fetch('/empleos', {
+        method: "get"});
+        empleos = await respuesta.json();
+    }
+cargarEmpleos();
 
 const cargarUsuarios= async () => {
     const respuesta = await fetch('/usuarios', {
         method: "get"});
         usuarios = await respuesta.json();
         console.log('Usuarios', usuarios)
-        console.log('Usua', usuarios[1][2])
 
     }
 cargarUsuarios();
@@ -149,8 +157,13 @@ function SetHomeScreen(){
         </div>
 
         <div class="mr-jobs hide" id="mr-jobs">
-        jobs
+            <div class="mi-red-jobs">
+            <div class="jobs" id="jobs"><h5>Empleos</h5>
+                
+            </div>
     </div>
+    
+        </div>
 
     <div class="mr-messages hide" id="mr-messages">
     messages
@@ -232,6 +245,27 @@ function SetHomeScreen(){
               <div style="font-size: x-small;" class="group-text">grupo fjdjk.</div>
           </div>
   </div>`
+
+  document.getElementById("jobs").innerHTML+=``
+for(i=0; i<empleos.length; i++){
+
+  document.getElementById("jobs").innerHTML+=
+
+  `      <div class="invitation">
+  <div class="invitacion-left">
+      <div class="inv-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/job.jpeg" alt="" ></div>
+      <div class="inv-content">
+          <div class="inv-name">${empleos[i][1]}</div>
+          <div style="font-size: x-small;" class="inv-text">Vacantes: ${empleos[i][2]}</div>
+          <div style="font-size: x-small;" class="inv-text">Sueldo: ${empleos[i][3]}</div>
+      </div>
+  </div>
+  <div class="invitacion-rigth">
+      <div id="aply" type="button" class="acept-invitation">APLICAR</div>
+      
+  </div> 
+</div>`
+}
        
   
 
