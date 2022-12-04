@@ -10,7 +10,19 @@ app.use(express.json()); // mapea la inf en formato json
 app.use(express.urlencoded({extended:true})); // en url
 
 export let connection: any;
-let result :any;
+let result1 :any;
+let result2 :any;
+let result3 :any;
+let result4 :any;
+let result5 :any;
+let result6 :any;
+let result7 :any;
+let result8 :any;
+let result9 :any;
+let result11 :any;
+let result12 :any;
+let result13:any;
+
 
 
 
@@ -30,6 +42,10 @@ router.get('/invitaciones',async function(req, res){
   selectInvitaciones(req,res)
 })
 
+router.get('/contactos',async function(req, res){
+  selectContactos(req,res)
+})
+
 router.get('/grupos',async function(req, res){
   selectGrupos(req,res)
 })
@@ -44,17 +60,26 @@ router.get('/empleos',async function(req, res){
 router.get('/personas',async function(req, res){
   selectPersonas(req,res)
 })
+
+router.get('/formacion',async function(req, res){
+  selectFormacion(req,res)
+})
+
+router.get('/empresas',async function(req, res){
+  selectEmpresas(req,res)
+})
 //----------------------------FUNCIONES 
-async function selectPersonas(req: any, res:any) {
+
+async function selectFormacion(req: any, res:any) {
   try {
     connection = await oracledb.getConnection({
       user: "SYSTEM",
       password: "0000",
       connectString: "localhost:1521/xepdb1"
     });
-    console.log('connected to database on router');
+    console.log('connected to database on router.selectPersonas');
 
-    result = await connection.execute(`SELECT * FROM PERSON `)
+    result13 = await connection.execute(`SELECT * FROM FORMACION `)
 
   } catch (err) {
     return res.send(err);
@@ -63,17 +88,83 @@ async function selectPersonas(req: any, res:any) {
       try {
 
         await connection.close();
-        console.log('close connection success');
+        console.log('close connection success .selectPersonas');
       } catch (err) {
         console.error(err);
       }
     }
-    if (result.rows.length == 0) {
+    if (result13.rows.length == 0) {
 
       return res.send('query send no rows');
     } else {
      
-      return res.send(result.rows);
+      return res.send(result13.rows);
+    }
+  }
+}
+
+async function selectEmpresas(req: any, res:any) {
+  try {
+    connection = await oracledb.getConnection({
+      user: "SYSTEM",
+      password: "0000",
+      connectString: "localhost:1521/xepdb1"
+    });
+    console.log('connected to database on router.selectPersonas');
+
+    result12 = await connection.execute(`SELECT * FROM EMPRESA `)
+
+  } catch (err) {
+    return res.send(err);
+  } finally {
+    if (connection) {
+      try {
+
+        await connection.close();
+        console.log('close connection success .selectPersonas');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (result12.rows.length == 0) {
+
+      return res.send('query send no rows');
+    } else {
+     
+      return res.send(result12.rows);
+    }
+  }
+}
+
+async function selectPersonas(req: any, res:any) {
+  try {
+    connection = await oracledb.getConnection({
+      user: "SYSTEM",
+      password: "0000",
+      connectString: "localhost:1521/xepdb1"
+    });
+    console.log('connected to database on router.selectPersonas');
+
+    result1 = await connection.execute(`SELECT * FROM PERSON `)
+
+  } catch (err) {
+    return res.send(err);
+  } finally {
+    if (connection) {
+      try {
+
+        await connection.close();
+        console.log('close connection success .selectPersonas');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (result1.rows.length == 0) {
+
+      return res.send('query send no rows');
+    } else {
+     
+      return res.send(result1.rows);
     }
   }
 }
@@ -85,9 +176,9 @@ async function selectEmpleos(req: any, res:any) {
       password: "0000",
       connectString: "localhost:1521/xepdb1"
     });
-    console.log('connected to database on router');
+    console.log('connected to database on router.selectEmpleos');
 
-    result = await connection.execute(`SELECT * FROM EMPLEO `)
+    result2 = await connection.execute(`SELECT * FROM EMPLEO `)
 
   } catch (err) {
     return res.send(err);
@@ -96,17 +187,17 @@ async function selectEmpleos(req: any, res:any) {
       try {
 
         await connection.close();
-        console.log('close connection success');
+        console.log('close connection success selectEmpleos');
       } catch (err) {
         console.error(err);
       }
     }
-    if (result.rows.length == 0) {
+    if (result2.rows.length == 0) {
 
       return res.send('query send no rows');
     } else {
      
-      return res.send(result.rows);
+      return res.send(result2.rows);
     }
   }
 }
@@ -118,9 +209,9 @@ async function selectGrupos(req: any, res:any) {
       password: "0000",
       connectString: "localhost:1521/xepdb1"
     });
-    console.log('connected to database on router');
+    console.log('connected to database on router.selectGrupos');
 
-    result = await connection.execute(`SELECT * FROM GRUPO`)
+    result3 = await connection.execute(`SELECT * FROM GRUPO`)
 
   } catch (err) {
     return res.send(err);
@@ -129,17 +220,17 @@ async function selectGrupos(req: any, res:any) {
       try {
 
         await connection.close();
-        console.log('close connection success');
+        console.log('close connection success selectGrupos');
       } catch (err) {
         console.error(err);
       }
     }
-    if (result.rows.length == 0) {
+    if (result3.rows.length == 0) {
 
-      return res.send('query send no rows');
+      return res.send('query send no rows grupos');
     } else {
      
-      return res.send(result.rows);
+      return res.send(result3.rows);
     }
   }
 }
@@ -151,9 +242,9 @@ async function selectUsuarioGrupo(req: any, res:any) {
       password: "0000",
       connectString: "localhost:1521/xepdb1"
     });
-    console.log('connected to database on router');
+    console.log('connected to database on router.usuariogrupo');
 
-    result = await connection.execute(`SELECT * FROM USUARIOGRUPO`)
+    result4 = await connection.execute(`SELECT * FROM USUARIOGRUPO`)
 
   } catch (err) {
     return res.send(err);
@@ -167,12 +258,12 @@ async function selectUsuarioGrupo(req: any, res:any) {
         console.error(err);
       }
     }
-    if (result.rows.length == 0) {
+    if (result4.rows.length == 0) {
 
       return res.send('query send no rows');
     } else {
      
-      return res.send(result.rows);
+      return res.send(result4.rows);
     }
   }
 }
@@ -184,9 +275,9 @@ async function selectInvitaciones(req: any, res:any) {
       password: "0000",
       connectString: "localhost:1521/xepdb1"
     });
-    console.log('connected to database on router');
+    console.log('connected to database on router.invitaciones');
 
-    result = await connection.execute(`SELECT * FROM SOLICITUD WHERE SOLICITUD.ESTADO= 'S'`)
+    result5 = await connection.execute(`SELECT * FROM SOLICITUD WHERE SOLICITUD.ESTADO= 'S'`)
 
   } catch (err) {
     return res.send(err);
@@ -200,13 +291,46 @@ async function selectInvitaciones(req: any, res:any) {
         console.error(err);
       }
     }
-    if (result.rows.length == 0) {
+    if (result5.rows.length == 0) {
 
       return res.send('query send no rows');
     } else {
      
-      return res.send(result.rows);
+      return res.send(result5.rows);
     }
+  }
+}
+async function selectContactos(req: any, res:any) {
+  try {
+    connection = await oracledb.getConnection({
+      user: "SYSTEM",
+      password: "0000",
+      connectString: "localhost:1521/xepdb1"
+    });
+    console.log('connected to database on router');
+
+    result6 = await connection.execute(`SELECT * FROM SOLICITUD WHERE SOLICITUD.ESTADO= 'C'`)
+    
+  } catch (err) {
+    return res.send(err);
+  } finally {
+    if (connection) {
+      try {
+
+        await connection.close();
+        console.log('close connection success');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (result6.rows.length == 0) {
+
+      return res.send('query send no rows');
+    } else {
+     
+      return res.send(result6.rows);
+    }
+    
   }
 }
 
@@ -219,9 +343,9 @@ router.post("/nuevapersona", async function(req,res) {
     });
     console.log('connected to database on router');
 
-    result = await connection.execute(`INSERT INTO  Person (ID, P_NOMBRE,P_APELLIDO,CORREO)  VALUES (:ID, :P_NOMBRE, :P_APELLIDO', :CORREO)`,[req.body.id, req.body.p_Nombre, req.body.p_apellido, req.body.correo],
+    result7 = await connection.execute(`INSERT INTO  Person (ID, P_NOMBRE,P_APELLIDO,CORREO)  VALUES (:ID, :P_NOMBRE, :P_APELLIDO', :CORREO)`,[req.body.id, req.body.p_Nombre, req.body.p_apellido, req.body.correo],
     {autoCommit: true});
-    res.send(result.body)
+    res.send(result7.body)
     res.end;
   } catch (err) {
     return res.send(err);
@@ -237,7 +361,7 @@ async function selectUsers(req: any, res:any) {
     });
     console.log('connected to database on router');
 
-    result = await connection.execute(`SELECT  PERSON.correo , USUARIO.password, PERSON.P_Nombre ,USUARIO.informacion_adicional, PERSON.P_APELLIDO FROM Usuario 
+    result8 = await connection.execute(`SELECT  PERSON.correo , USUARIO.password, PERSON.P_Nombre ,USUARIO.informacion_adicional, PERSON.P_APELLIDO FROM Usuario 
     INNER JOIN PERSON  ON USUARIO.persona_id= PERSON.id`)
     
   } catch (err) {
@@ -252,12 +376,12 @@ async function selectUsers(req: any, res:any) {
         console.error(err);
       }
     }
-    if (result.rows.length == 0) {
+    if (result8.rows.length == 0) {
 
       return res.send('query send no rows');
     } else {
      
-      return res.send(result.rows);
+      return res.send(result8.rows);
     }
     
   }
@@ -272,7 +396,7 @@ async function selectMensajes(req: any, res:any) {
     });
     console.log('connected to database on router');
 
-    result = await connection.execute(`SELECT  * FROM MENSAJE`)
+    result9 = await connection.execute(`SELECT  * FROM MENSAJE`)
 
   } catch (err) {
     return res.send(err);
@@ -286,12 +410,12 @@ async function selectMensajes(req: any, res:any) {
         console.error(err);
       }
     }
-    if (result.rows.length == 0) {
+    if (result9.rows.length == 0) {
 
       return res.send('query send no rows');
     } else {
      
-      return res.send(result.rows);
+      return res.send(result9.rows);
     }
   }
 }
@@ -305,7 +429,7 @@ async function selectPublicaciones(req: any, res:any) {
     });
     console.log('connected to database on router');
 
-    result = await connection.execute(`SELECT * FROM publicacion`)
+    result11 = await connection.execute(`SELECT * FROM publicacion`)
 
   } catch (err) {
     return res.send(err);
@@ -319,12 +443,12 @@ async function selectPublicaciones(req: any, res:any) {
         console.error(err);
       }
     }
-    if (result.rows.length == 0) {
+    if (result11.rows.length == 0) {
 
       return res.send('query send no rows');
     } else {
      
-      return res.send(result.rows);
+      return res.send(result11.rows);
     }
   }
 }

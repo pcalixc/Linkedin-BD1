@@ -1,20 +1,52 @@
 
+
 let usuarioActual;
 let usuarios;
 let mensajes;
 let publicaciones;
 let invitaciones;
-//let seguidos;
+let contactos;
 let grupos;
 let empleos;
 let personas;
 let usuarioGrupo;
+let formacion;
+let empresas;
 
-const cargarPersonas= async () => {
-    const respuesta = await fetch('/personas', {
+
+
+const cargarUsuarios= async () => {
+    const respuesta = await fetch('/usuarios', {
         method: "get"});
-        personas = await respuesta.json();
+        usuarios = await respuesta.json();
+        console.log('Usuarios', usuarios)
     }
+cargarUsuarios();
+
+const cargarFormacion= async () => {
+    const respuesta = await fetch('/formacion', {
+        method: "get"});
+        formacion = await respuesta.json();
+        console.log('formacion', formacion)
+    }
+    cargarFormacion();
+
+    const cargarEmpresas= async () => {
+        const respuesta = await fetch('/empresas', {
+            method: "get"});
+            empresas = await respuesta.json();
+            console.log('empresas', empresas)
+        }
+        cargarEmpresas();
+
+
+
+async function cargarPersonas() {
+    const respuesta = await fetch('/personas', {
+        method: "get"
+    });
+    personas = await respuesta.json();
+}
 
 cargarPersonas();
 
@@ -26,6 +58,15 @@ const cargarInvitaciones= async () => {
     }
 
 cargarInvitaciones();
+
+const cargarContactos= async () => {
+    const respuesta = await fetch('/contactos', {
+        method: "get"});
+        contactos = await respuesta.json();
+        console.log("contactos",contactos)
+    }
+
+cargarContactos();
 
     const cargarUsuarioGrupos= async () => {
         const respuesta = await fetch('/usuariogrupo', {
@@ -41,14 +82,6 @@ const cargarEmpleos= async () => {
         empleos = await respuesta.json();
     }
 cargarEmpleos();
-
-const cargarUsuarios= async () => {
-    const respuesta = await fetch('/usuarios', {
-        method: "get"});
-        usuarios = await respuesta.json();
-        console.log('Usuarios', usuarios)
-    }
-cargarUsuarios();
 
 const cargarPublicaciones= async () => {
     const respuesta = await fetch('/publicaciones', {
@@ -77,7 +110,7 @@ function verificarUsuario(){
 
     for (i=0; i<usuarios.length;i++){
         if (usuarios[i][0] ==enteredUser && usuarios[i][1]==enteredPassword) {
-            usuarioActual=[`${enteredUser}`,`${enteredPassword}`, `${usuarios[i][2]}`,`${usuarios[i][3]}`,`${usuarios[i][4]}`,`${i}` ]
+            usuarioActual=[`${enteredUser}`,`${enteredPassword}`, `${usuarios[i][2]}`,`${usuarios[i][3]}`,`${usuarios[i][4]}`,i ]
         }     }
         console.log(usuarioActual)
 
@@ -110,20 +143,21 @@ function SetHomeScreen(){
                 <div id="opt-invitations" onclick="Menu('mr-invitations','opt-invitations')"><i class="fa-solid fa-users"></i>Mi red</div >
                 <div id="opt-contacts" onclick="Menu('mr-contacts','opt-contacts')"><i class="fa-solid fa-address-book"></i>Contactos</div >
                 <div id="opt-groups" onclick="Menu('mr-groups','opt-groups')"><i class="fa-solid fa-users-line"></i>Grupos</div>
-                <div id="opt-notifications" onclick="Menu('mr-notifications','opt-notifications')"><i class="fa-solid fa-bell"></i>Notificaciones</div>
+                <div id="opt-notifications"><i class="fa-solid fa-bell"></i>Notificaciones</div>
                 <div id="opt-jobs" onclick="Menu('mr-jobs','opt-jobs')"><i class="fa-solid fa-suitcase"></i>Empleos</div>
                 <div id="opt-mensajes" onclick="Menu('mr-messages','opt-mensajes')"><i class="fa-solid fa-message"></i>Mensajes</div>
                 <div ><i class="fa-solid fa-bars"></i></i>Ajustes</div>
 
                 </div>
-                <div class="profile-info">
-                    <div class="profile-info-img"> <img style="width: 70px; height:80px" src="/img/messi.jpg" alt=""></div>
+                <div type="button" class="profile-info" onclick="MostrarPerfil(${usuarioActual[5]})">
+                    <div class="profile-info-img" > <img style="width: 70px; height:80px" src="/img/perfil.png" alt=""></div>
                     <h6>${usuarioActual[2]}</h6>
                     <div>${usuarioActual[3]}</div>
                 </div>
             </div>
 
             <div class="changing hide" id="changing">
+
             </div>
             <div class="hs-messages" id=hs-messages>
                 <div class="messages-header"><h3>Mensajes</h3></div>
@@ -132,7 +166,9 @@ function SetHomeScreen(){
 
                 <div class="messages" id="messages">
                 </div>
-            </div>`
+            </div>
+            
+         `
             document.getElementById("changing").innerHTML+=``
             document.getElementById("changing").innerHTML+=`
             <div class="posts-space " id="posts-space">
@@ -152,18 +188,14 @@ function SetHomeScreen(){
 
                 </div>
                 <div class="may-know"><h5>Personas que quizas conozcas</h5>
-                    <div class="mk-card">
-                        <div class="mk-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil2.jpeg" alt=""></div>
-                        <div class="mk-name">name</div>
-                        <div class="mk-connect">conectar</div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
       
         <div class="mr-contacts hide" id="mr-contacts">
             <div class="mi-red-contacts hide">
-                <div class="contacts"><h5>Contactos</h5>
+                <div class="contacts" id="contacts"><h5>Contactos</h5>
 
 
                     
@@ -196,9 +228,20 @@ function SetHomeScreen(){
         </div>
 
     <div class="mr-messages hide" id="mr-messages">
+    <div class="messages1-header"><h3>Usuario</h3></div>
+    <div class="messages1" id="messages1">
 
 
-    messages
+    
+    <input style="background-color: #e5e5e53d; margin-top: 450px; type="tex" class="form-control" id="user" aria-describedby="emailHelp">
+
+    </div>
+    </div>  
+
+    </div>
+
+
+ 
 </div>
         
         
@@ -211,14 +254,15 @@ function SetHomeScreen(){
         let Id= publicaciones[i][4];
         let user1=usuarios[Id];
         let n=user1[2];
-        let a=user1[4]
+        let a=user1[4];
+     
 
         
         document.getElementById("all-posts").innerHTML+=`
         <div class="post">
         <div class="post-profile-info">
             <div class="post-profile-info-left">
-                <div class="post-profile-img"><img style="width: 50px; height:50px; border-radius: 10px;" src="/img/perfil.png" alt=""></div>
+                <div onclick="MostrarPerfil(${Id})" class="post-profile-img"><img style="width: 50px; height:50px; border-radius: 10px;" src="/img/perfil.png" alt=""></div>
                 <div class="post-profile-name"><h6>${n} ${a}</h6></div>
                 <div style="font-size: small;" class="post-date">Hace 20 horas</div>
             </div>
@@ -242,9 +286,9 @@ function SetHomeScreen(){
                 document.getElementById("messages").innerHTML+=`
            
                 <div class="message">
-                    <div class="ms-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil.png" alt="" ></div>
+                    <div onclick="MostrarPerfil()" class="ms-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil.png" alt="" ></div>
                     <div class="ms-content">
-                        <div class="ms-content-name">Banco Atlantida</div>
+                        <div class="ms-content-name">Usuario</div>
                         <div </div>
                     </div>
                     </div>  
@@ -253,16 +297,19 @@ function SetHomeScreen(){
               
             for(i=0; i<invitaciones.length-1; i++){ 
                 let idr=invitaciones[i][0];
+                let user1=usuarios[idr];
                 let nombre=usuarios[idr][2];
                 let apellido=usuarios[idr][4];
                 let info=usuarios[idr][3]
+
+
                 //if()
 
                 
               document.getElementById("invitations").innerHTML+=`
               <div class="invitation">
               <div class="invitacion-left">
-                  <div class="inv-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil.png" alt="" ></div>
+                  <div onclick="MostrarPerfil(${idr})" class="inv-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil.png" alt="" ></div>
                   <div class="inv-content">
                       <div class="inv-name">${nombre} ${apellido}</div>
                       <div style="font-size: x-small;" class="inv-text">${info}</div>
@@ -274,17 +321,44 @@ function SetHomeScreen(){
               </div> 
           </div>`}
 
+          document.getElementById("contacts").innerHTML+=``
+              
+            for(i=0; i<invitaciones.length-1; i++){ 
+                let idr=contactos[i][0];
+                let user1=usuarios[idr];
+                let nombre=usuarios[idr][2];
+                let apellido=usuarios[idr][4];
+                let info=usuarios[idr][3]
+                //if()
+
+                
+              document.getElementById("contacts").innerHTML+=`
+              <div class="invitation">
+              <div class="invitacion-left">
+                  <div onclick="MostrarPerfil(${idr})" class="inv-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil.png" alt="" ></div>
+                  <div class="inv-content">
+                      <div class="inv-name">${nombre} ${apellido}</div>
+                      <div style="font-size: x-small;" class="inv-text">${info}</div>
+                  </div>
+              </div>
+              <div class="invitacion-rigth">
+                  <div class="acept-invitation">Enviar mensaje</div>
+                  <div></div>
+              </div> 
+          </div>`}
+
           document.getElementById("groups").innerHTML+=``
+          for(i=0; i<grupos.length-1; i++){ 
 
           document.getElementById("groups").innerHTML+=
 
           `<div class="group">
           <div class="group-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/grupo.jpg" alt="" ></div>
           <div class="group-content">
-              <div class="group-name">Finance Club</div>
-              <div style="font-size: x-small;" class="group-text">grupo fjdjk.</div>
+              <div class="group-name">${grupos[i][1]}</div>
+              <div style="font-size: x-small;" class="group-text">informacion</div>
           </div>
-  </div>`
+  </div>`}
 
   document.getElementById("jobs").innerHTML+=``
 for(i=0; i<empleos.length; i++){
@@ -313,6 +387,81 @@ for(i=0; i<empleos.length; i++){
     document.getElementById('home').classList.remove('hide');
 }
 
+function MostrarPerfil(id){
+    console.log(id)
+    console.log(usuarios[id])
+    document.getElementById('home').classList.add('hide');
+    document.getElementById('myModal').classList.remove('hide');
+
+    
+    document.getElementById('myModal').innerHTML+=
+    `
+    
+    <div class="student-profile py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent text-center">
+              <img class="profile_img" src="/img/perfil.png" alt="student dp">
+              <h3>${usuarios[id][2]} ${usuarios[id][4]}</h3>
+            </div>
+            <div class="card-body">
+              <p class="mb-0"><strong class="pr-1"></strong>${usuarios[id][3]}</p>
+              <p class="mb-0"><strong class="pr-1"></strong>${personas[id][5]}</p>
+              <p class="mb-0"><strong class="pr-1"></strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Educacion</h3>
+            </div>
+            <div class="card-body pt-0">
+              <table class="table table-bordered">
+                <tr>
+                  <th width="30%">1</th>
+                  <td width="2%">:</td>
+                  <td>${formacion[id][1]}, ${formacion[id][2]}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Experiencia Laboral</h3>
+            </div>
+            <div class="card-body pt-0">
+              <table class="table table-bordered">
+                <tr>
+                  <th width="30%">1</th>
+                  <td width="2%">:</td>
+                  <td>${empresas[id][1]}, ${empresas[id][2]}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+            <div style="height: 26px"></div>
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Informacion General</h3>
+            </div>
+            <div class="card-body pt-0">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+`
+
+   
+}
 
 
 
@@ -377,6 +526,12 @@ function GuardarPersona(){
     })
     .catch(error => console.error('Error:', error))
     cargarPersonas();
+}
+
+function Back(){
+    // document.getElementById('home').classList.remove('hide');
+    // document.getElementById('myModal').classList.add('hide');
+    console.log('jjjjjjjjjjjjjjjjj')
 }
 
 
