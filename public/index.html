@@ -42,33 +42,44 @@
         </div>
 
         <div class="new-acc-screen hide" id="new-acc-screen">
-            <div class="sign-in-card">
-                <div class="sign-in-card-header">
+            <div class="log-in-card">
+                <div class="log-in-card-header">
                     <h3 >Crear Cuenta</h3>
                     <h8 style="color: gray" >Mantente al día de tu mundo profesional</h8>
                 </div>
-                <form class="sign-in-form">
+                <form class="log-in-form" id="log-in-form1">
                         <div class="mb-3">
-                            <labe  for="exampleInputEmail1" class="form-label">Nombre</labe>
-                            <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="nombre-nueva-cuenta" aria-describedby="emailHelp">
+                            <labe  for="exampleInputEmail1" class="form-label">Primer Nombre</labe>
+                            <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="new-nombre" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
-                            <labe  for="exampleInputEmail1" class="form-label">Apellido</labe>
-                            <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="apellido-nueva-cuenta" aria-describedby="emailHelp">
+                            <labe  for="exampleInputEmail1" class="form-label">Primer Apellido</labe>
+                            <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="new-apellido" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
                             <labe  for="exampleInputEmail1" class="form-label">Correo</labe>
-                            <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="correo-nueva-cuenta" aria-describedby="emailHelp">
+                            <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="new-correo" aria-describedby="emailHelp">
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                            <input style="background-color: #e5e5e53d;" type="password" class="form-control" id="password-nueva-cuenta">
-                        </div>
-                        <div>
-                            <div onclick="CrearNuevaCuenta()" class="sign-in-button"><p>Crear</p></div>
-                        </div> 
+                    <p style="font-size:medium;"><strong type="button" onclick="GuardarPersona()">Siguiente</strong></p>
+
+
                         
                 </form>
+                <form class="log-in-form2 hide" id="log-in-form2">
+                    <div class="mb-3">
+                        <labe  for="exampleInputEmail1" class="form-label">Informacion General</labe>
+                        <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="new-info" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <labe  for="exampleInputEmail1" class="form-label">Contraseña</labe>
+                        <input style="background-color: #e5e5e53d;" type="tex" class="form-control" id="new-contrasena" aria-describedby="emailHelp">
+                    </div>
+                    <div>
+                        <div onclick="CrearNuevaCuenta()" class="sign-in-button"><p>Crear</p></div>
+                    </div> 
+                    
+            </form>
+
             </div>
         </div>
         

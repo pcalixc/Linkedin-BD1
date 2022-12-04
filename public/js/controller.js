@@ -4,10 +4,36 @@ let usuarios;
 let mensajes;
 let publicaciones;
 let invitaciones;
-let seguidos;
+//let seguidos;
 let grupos;
 let empleos;
+let personas;
+let usuarioGrupo;
 
+const cargarPersonas= async () => {
+    const respuesta = await fetch('/personas', {
+        method: "get"});
+        personas = await respuesta.json();
+    }
+
+cargarPersonas();
+
+const cargarInvitaciones= async () => {
+    const respuesta = await fetch('/invitaciones', {
+        method: "get"});
+        invitaciones = await respuesta.json();
+        console.log("invitaciones",invitaciones)
+    }
+
+cargarInvitaciones();
+
+    const cargarUsuarioGrupos= async () => {
+        const respuesta = await fetch('/usuariogrupo', {
+            method: "get"});
+            usuarioGrupo = await respuesta.json();
+            
+        }
+    cargarUsuarioGrupos();
 
 const cargarEmpleos= async () => {
     const respuesta = await fetch('/empleos', {
@@ -21,7 +47,6 @@ const cargarUsuarios= async () => {
         method: "get"});
         usuarios = await respuesta.json();
         console.log('Usuarios', usuarios)
-
     }
 cargarUsuarios();
 
@@ -29,8 +54,6 @@ const cargarPublicaciones= async () => {
     const respuesta = await fetch('/publicaciones', {
         method: "get"});
         publicaciones = await respuesta.json();
-        console.log('publicaciones', publicaciones)
-
     }
     cargarPublicaciones();
 
@@ -38,8 +61,6 @@ const cargarPublicaciones= async () => {
         const respuesta = await fetch('/mensajes', {
             method: "get"});
             mensajes = await respuesta.json();
-            console.log('mensajes', mensajes)
-    
         }
         cargarMensajes();
 
@@ -47,8 +68,6 @@ const cargarPublicaciones= async () => {
             const respuesta = await fetch('/grupos', {
                 method: "get"});
                 grupos = await respuesta.json();
-                console.log('mensajes', grupos)
-        
             }
             cargarGrupos();
 
@@ -108,6 +127,9 @@ function SetHomeScreen(){
             </div>
             <div class="hs-messages" id=hs-messages>
                 <div class="messages-header"><h3>Mensajes</h3></div>
+
+
+
                 <div class="messages" id="messages">
                 </div>
             </div>`
@@ -124,7 +146,9 @@ function SetHomeScreen(){
 
         <div class="mr-invitations hide" id="mr-invitations">
             <div class="mi-red-invitationes ">
-                <div class="invitations" id="invitations">  
+                <div class="invitations" id="invitations"> 
+
+
 
                 </div>
                 <div class="may-know"><h5>Personas que quizas conozcas</h5>
@@ -140,6 +164,8 @@ function SetHomeScreen(){
         <div class="mr-contacts hide" id="mr-contacts">
             <div class="mi-red-contacts hide">
                 <div class="contacts"><h5>Contactos</h5>
+
+
                     
                 </div>
             </div>
@@ -147,7 +173,10 @@ function SetHomeScreen(){
 
         <div class="mr-groups hide" id="mr-groups">
             <div class="mi-red-groups">
-                <div class="groups" id="groups"><h5>Grupos</h5>     
+                <div class="groups" id="groups"><h5>Grupos</h5> 
+                
+                
+
                 </div>
             </div>
         </div>
@@ -159,6 +188,7 @@ function SetHomeScreen(){
         <div class="mr-jobs hide" id="mr-jobs">
             <div class="mi-red-jobs">
             <div class="jobs" id="jobs"><h5>Empleos</h5>
+
                 
             </div>
     </div>
@@ -166,6 +196,8 @@ function SetHomeScreen(){
         </div>
 
     <div class="mr-messages hide" id="mr-messages">
+
+
     messages
 </div>
         
@@ -218,21 +250,29 @@ function SetHomeScreen(){
                     </div>  
               `
               document.getElementById("invitations").innerHTML+=``
+              
+            for(i=0; i<invitaciones.length-1; i++){ 
+                let idr=invitaciones[i][0];
+                let nombre=usuarios[idr][2];
+                let apellido=usuarios[idr][4];
+                let info=usuarios[idr][3]
+                //if()
 
+                
               document.getElementById("invitations").innerHTML+=`
               <div class="invitation">
               <div class="invitacion-left">
-                  <div class="inv-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil2.jpeg" alt="" ></div>
+                  <div class="inv-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil.png" alt="" ></div>
                   <div class="inv-content">
-                      <div class="inv-name">Banco Atlantida</div>
-                      <div style="font-size: x-small;" class="inv-text">Economista.</div>
+                      <div class="inv-name">${nombre} ${apellido}</div>
+                      <div style="font-size: x-small;" class="inv-text">${info}</div>
                   </div>
               </div>
               <div class="invitacion-rigth">
-                  <div class="acept-invitation">Aceptar</div>
+                  <div class="acept-invitation">Seguir de Vuelta</div>
                   <div class="ignore-invitation">ignorar</div>
               </div> 
-          </div>`
+          </div>`}
 
           document.getElementById("groups").innerHTML+=``
 
@@ -266,8 +306,7 @@ for(i=0; i<empleos.length; i++){
   </div> 
 </div>`
 }
-       
-  
+
 
 
     document.getElementById('RegistroUsuario').classList.add('hide');
@@ -300,6 +339,44 @@ function Menu(show, option){
 
 }
 
+function PantallaCrearCuenta(){
+    document.getElementById('new-acc-screen').classList.remove('hide');
+    document.getElementById('sign-in-screen').classList.add('hide');
 
+    
+}
+
+function CrearNuevaCuenta(){
+    document.getElementById('new-acc-screen').classList.add('hide');
+    document.getElementById('sign-in-screen').classList.remove('hide');
+}
+
+function GuardarPersona(){
+    document.getElementById('log-in-form1').classList.add('hide');
+    document.getElementById('log-in-form2').classList.remove('hide');
+
+    let id= 31;
+    let p_nombre= document.getElementById('new-nombre').value;
+    let p_apellido=document.getElementById('new-apellido').value;
+    let correo=document.getElementById('new-correo').value;
+
+    fetch('/nuevapersona',{
+        method: "post",
+        body: JSON.stringify({id,p_nombre,p_apellido,correo
+                    }),
+        headers:{
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        }}).then(res => {
+        alert("Usuario creado");
+
+        console.log('Success:', res);
+
+        document.getElementById('new-acc-screen').classList.add('oculto');
+        document.getElementById('sign-in-screen').classList.remove('oculto');
+    })
+    .catch(error => console.error('Error:', error))
+    cargarPersonas();
+}
 
 
