@@ -126,7 +126,7 @@ function SetHomeScreen(){
     
     document.getElementById("home").innerHTML+=
     `   <div class="linkedin-header1">
-            <div class="l1">${usuarioActual[2]}</div>
+            <div style="color: var(--blue)" class="l1"><i class="fa-solid fa-circle"></i><strong>${usuarioActual[2]}</strong></div>
             <div class="l1"><img id="logo" src="../img/linkedinlogo.png" alt=""></div>
             <div></div>
         </div>
@@ -173,9 +173,13 @@ function SetHomeScreen(){
             document.getElementById("changing").innerHTML+=`
             <div class="posts-space " id="posts-space">
                 <div class="create-post ">
-                    Crear un nuevo post...
+                    <p>Crear un post</p>
+                    <input style="background-color: #e5e5e53d;" type="text" class="form-control" id="user" aria-describedby="newpost">
+                    <div onclick="CrearPost()" class="post-button"><p>Publicar</p></div>     
                 </div>
                 <div class="all-posts" id="all-posts">
+
+
                 </div>
                 </div>
             </div>
@@ -238,7 +242,7 @@ function SetHomeScreen(){
     </div>
     </div>  
 
-    </div>
+    
 
 
  
@@ -392,12 +396,13 @@ function MostrarPerfil(id){
     console.log(usuarios[id])
     document.getElementById('home').classList.add('hide');
     document.getElementById('myModal').classList.remove('hide');
+    //document.getElementById('profile-mm').innerHTML=``
 
     
-    document.getElementById('myModal').innerHTML+=
+    document.getElementById('profile-mm').innerHTML+=
     `
     
-    <div class="student-profile py-4">
+    
     <div class="container">
       <div class="row">
         <div class="col-lg-4">
@@ -428,6 +433,9 @@ function MostrarPerfil(id){
               </table>
             </div>
           </div>
+          <div></div>
+          <div></div>
+
           <div class="col-lg-8">
           <div class="card shadow-sm">
             <div class="card-header bg-transparent border-0">
@@ -451,6 +459,10 @@ function MostrarPerfil(id){
             <div class="card-body pt-0">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
             
           </div>
         </div>
@@ -514,10 +526,8 @@ function GuardarPersona(){
         body: JSON.stringify({id,p_nombre,p_apellido,correo
                     }),
         headers:{
-            Accept: "application/json",
-            "Content-Type": "application/json"
+            "Content-type": "application/json; charset=UTF-8"
         }}).then(res => {
-        alert("Usuario creado");
 
         console.log('Success:', res);
 
@@ -529,8 +539,9 @@ function GuardarPersona(){
 }
 
 function Back(){
-    // document.getElementById('home').classList.remove('hide');
-    // document.getElementById('myModal').classList.add('hide');
+    document.getElementById('home').classList.remove('hide');
+     document.getElementById('myModal').classList.add('hide');
+     document.getElementById('profile-mm').innerHTML=``
     console.log('jjjjjjjjjjjjjjjjj')
 }
 

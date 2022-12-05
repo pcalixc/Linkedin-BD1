@@ -313,8 +313,8 @@ router.post("/nuevapersona", async function (req, res) {
             connectString: "localhost:1521/xepdb1"
         });
         console.log('connected to database on router');
-        result7 = await exports.connection.execute(`INSERT INTO  Person (ID, P_NOMBRE,P_APELLIDO,CORREO)  VALUES (:ID, :P_NOMBRE, :P_APELLIDO', :CORREO)`, [req.body.id, req.body.p_Nombre, req.body.p_apellido, req.body.correo], { autoCommit: true });
-        res.send(result7.body);
+        result7 = await exports.connection.execute(`INSERT INTO  Person (req.body.id, req.body.p_Nombre,req.body.p_apellido,req.body.correo)  VALUES (:ID, :P_NOMBRE, :P_APELLIDO', :CORREO)`, { autoCommit: true });
+        res.send(result7);
         res.end;
     }
     catch (err) {
