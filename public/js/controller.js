@@ -46,8 +46,9 @@ async function cargarPersonas() {
         method: "get"
     });
     personas = await respuesta.json();
-}
+    console.log("PERSONAS",personas)
 
+}
 cargarPersonas();
 
 const cargarInvitaciones= async () => {
@@ -94,6 +95,7 @@ const cargarPublicaciones= async () => {
         const respuesta = await fetch('/mensajes', {
             method: "get"});
             mensajes = await respuesta.json();
+            console.log(mensajes)
         }
         cargarMensajes();
 
@@ -145,7 +147,6 @@ function SetHomeScreen(){
                 <div id="opt-groups" onclick="Menu('mr-groups','opt-groups')"><i class="fa-solid fa-users-line"></i>Grupos</div>
                 <div id="opt-notifications"><i class="fa-solid fa-bell"></i>Notificaciones</div>
                 <div id="opt-jobs" onclick="Menu('mr-jobs','opt-jobs')"><i class="fa-solid fa-suitcase"></i>Empleos</div>
-                <div id="opt-mensajes" onclick="Menu('mr-messages','opt-mensajes')"><i class="fa-solid fa-message"></i>Mensajes</div>
                 <div ><i class="fa-solid fa-bars"></i></i>Ajustes</div>
 
                 </div>
@@ -287,16 +288,20 @@ function SetHomeScreen(){
 
             document.getElementById("messages").innerHTML+=``
 
+            for(i=14; i>=0; i--){ 
+
                 document.getElementById("messages").innerHTML+=`
            
                 <div class="message">
                     <div onclick="MostrarPerfil()" class="ms-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/perfil.png" alt="" ></div>
                     <div class="ms-content">
-                        <div class="ms-content-name">Usuario</div>
-                        <div </div>
+                        <div style="font-size: small;" class="ms-content-name">${usuarios[i][2]} ${usuarios[i][4]}</div>
+                        <div style="font-size: xx-small";>${mensajes[i][2]} </div>
                     </div>
                     </div>  
               `
+            }
+
               document.getElementById("invitations").innerHTML+=``
               
             for(i=0; i<invitaciones.length-1; i++){ 
@@ -360,7 +365,7 @@ function SetHomeScreen(){
           <div class="group-img"><img style="height: 50px; width:50px; border-radius: 10px;" src="/img/grupo.jpg" alt="" ></div>
           <div class="group-content">
               <div class="group-name">${grupos[i][1]}</div>
-              <div style="font-size: x-small;" class="group-text">informacion</div>
+              <div style="font-size: x-small;" class="group-text"><strong>Informacion</strong></div>
           </div>
   </div>`}
 
@@ -482,16 +487,16 @@ function Menu(show, option){
     document.getElementById(show).classList.remove('hide');
     document.getElementById(option).classList.add('button-active');
 
-    tags=['posts-space','mr-invitations','mr-contacts','mr-groups','mr-notifications', 'mr-jobs', 'mr-messages']
-    tags1=['opt-posts','opt-invitations','opt-contacts','opt-groups','opt-notifications','opt-jobs','opt-mensajes']
+    tags=['posts-space','mr-invitations','mr-contacts','mr-groups','mr-notifications', 'mr-jobs']
+    tags1=['opt-posts','opt-invitations','opt-contacts','opt-groups','opt-notifications','opt-jobs']
 
-    for(i=0; i<7; i++){
+    for(i=0; i<6; i++){
         if(tags[i]!=show && document.getElementById(tags[i]).classList.value!=`${tags[i]} hide`){
             document.getElementById(tags[i]).classList.add('hide');
         }
     }
 
-    for(i=0; i<7; i++){
+    for(i=0; i<6; i++){
         if(tags1[i]!=option && document.getElementById(tags1[i]).classList.value==`button-active` ){
             document.getElementById(tags1[i]).classList.remove('button-active');
 
@@ -516,21 +521,25 @@ function GuardarPersona(){
     document.getElementById('log-in-form1').classList.add('hide');
     document.getElementById('log-in-form2').classList.remove('hide');
 
-    let id= 31;
+    let id= personas.length;
     let p_nombre= document.getElementById('new-nombre').value;
     let p_apellido=document.getElementById('new-apellido').value;
     let correo=document.getElementById('new-correo').value;
 
+    const person={
+        id1: id,
+        nombre: p_nombre,
+        apellido: p_apellido,
+        correo1: correo
+    }
+
     fetch('/nuevapersona',{
         method: "post",
-        body: JSON.stringify({id,p_nombre,p_apellido,correo
-                    }),
+        body: JSON.stringify(person),
         headers:{
             "Content-type": "application/json; charset=UTF-8"
         }}).then(res => {
-
         console.log('Success:', res);
-
         document.getElementById('new-acc-screen').classList.add('oculto');
         document.getElementById('sign-in-screen').classList.remove('oculto');
     })

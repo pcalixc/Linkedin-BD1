@@ -346,18 +346,22 @@ gap: 5px;
     border-radius: 15px;
     margin: 10px;
     height: 84vh;
+    overflow: auto;
+
 
 }
 
 .hs-messages .messages-header {
 margin: 15px;
 }
+
 .message {
     padding: 10px;
     background-color: rgba(201, 201, 201, 0.127);
     display: flex;
     gap: 4px;
     border-radius: 10px ;
+    margin-bottom: 5px;
 
 }
 
@@ -390,6 +394,7 @@ margin: 15px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
+
     }
 
 .mi-red-invitations{
@@ -595,7 +600,7 @@ margin: 15px;
 }
 
 .group {
-    background-color: white;
+    background-color: var(--gray);
     display: flex;
     gap: 10px;
     padding: 10px;

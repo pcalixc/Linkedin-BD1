@@ -1,9 +1,11 @@
 
 import oracledb from 'oracledb';
 import express, { Express, Request, response, Response } from 'express';
+import { request } from 'http';
 
 var router= express.Router();
 const app: Express = express();
+
 
 const port = process.env.PORT;
 app.use(express.json()); // mapea la inf en formato json
@@ -341,16 +343,24 @@ router.post("/nuevapersona", async function(req,res) {
       password: "0000",
       connectString: "localhost:1521/xepdb1"
     });
-    console.log('connected to database on router');
+    console.log('connected to database on router HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+    console.log("req",req);
 
-    result7 = await connection.execute(`INSERT INTO  Person (req.body.id, req.body.p_Nombre,req.body.p_apellido,req.body.correo)  VALUES (:ID, :P_NOMBRE, :P_APELLIDO', :CORREO)`,
+    result7 = await connection.execute(`INSERT INTO  Person (ID, P_NOMBRE,P_APELLIDO,CORREO)  VALUES (req.body.id, req.body.p_Nombre,req.body.p_apellido,req.body.correo)`,
     {autoCommit: true});
-    res.send(result7)
+
+    res.json({requestBody: req.body})
     res.end;
+    
   } catch (err) {
     return res.send(err);
   } 
  } )
+
+
+
+
+
 
 async function selectUsers(req: any, res:any) {
   try {
