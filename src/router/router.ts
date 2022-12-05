@@ -343,10 +343,31 @@ router.post("/nuevapersona", async function(req,res) {
       password: "0000",
       connectString: "localhost:1521/xepdb1"
     });
-    console.log('connected to database on router HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+    console.log('connected to database on router');
     console.log("req",req);
 
     result7 = await connection.execute(`INSERT INTO  Person (ID, P_NOMBRE,P_APELLIDO,CORREO)  VALUES (req.body.id, req.body.p_Nombre,req.body.p_apellido,req.body.correo)`,
+    {autoCommit: true});
+
+    res.json({requestBody: req.body})
+    res.end;
+    
+  } catch (err) {
+    return res.send(err);
+  } 
+ } )
+
+ router.post("/nuevousuario", async function(req,res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: "SYSTEM",
+      password: "0000",
+      connectString: "localhost:1521/xepdb1"
+    });
+    console.log('connected to database on router');
+    console.log("req",req);
+
+    result7 = await connection.execute(`INSERT INTO  USUARIO (ID, INFORMACION_ADICIONAL, PASSWORD, PERSONA_ID)  VALUES (31, req.body.informacion_adicional,req.body.password,req.body.per)`,
     {autoCommit: true});
 
     res.json({requestBody: req.body})

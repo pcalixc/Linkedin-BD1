@@ -19,7 +19,6 @@ const cargarUsuarios= async () => {
     const respuesta = await fetch('/usuarios', {
         method: "get"});
         usuarios = await respuesta.json();
-        console.log('Usuarios', usuarios)
     }
 cargarUsuarios();
 
@@ -27,7 +26,6 @@ const cargarFormacion= async () => {
     const respuesta = await fetch('/formacion', {
         method: "get"});
         formacion = await respuesta.json();
-        console.log('formacion', formacion)
     }
     cargarFormacion();
 
@@ -35,7 +33,6 @@ const cargarFormacion= async () => {
         const respuesta = await fetch('/empresas', {
             method: "get"});
             empresas = await respuesta.json();
-            console.log('empresas', empresas)
         }
         cargarEmpresas();
 
@@ -46,7 +43,6 @@ async function cargarPersonas() {
         method: "get"
     });
     personas = await respuesta.json();
-    console.log("PERSONAS",personas)
 
 }
 cargarPersonas();
@@ -55,7 +51,6 @@ const cargarInvitaciones= async () => {
     const respuesta = await fetch('/invitaciones', {
         method: "get"});
         invitaciones = await respuesta.json();
-        console.log("invitaciones",invitaciones)
     }
 
 cargarInvitaciones();
@@ -64,7 +59,6 @@ const cargarContactos= async () => {
     const respuesta = await fetch('/contactos', {
         method: "get"});
         contactos = await respuesta.json();
-        console.log("contactos",contactos)
     }
 
 cargarContactos();
@@ -95,7 +89,6 @@ const cargarPublicaciones= async () => {
         const respuesta = await fetch('/mensajes', {
             method: "get"});
             mensajes = await respuesta.json();
-            console.log(mensajes)
         }
         cargarMensajes();
 
@@ -512,10 +505,10 @@ function PantallaCrearCuenta(){
     
 }
 
-function CrearNuevaCuenta(){
-    document.getElementById('new-acc-screen').classList.add('hide');
-    document.getElementById('sign-in-screen').classList.remove('hide');
-}
+// function CrearNuevaCuenta(){
+//     document.getElementById('new-acc-screen').classList.add('hide');
+//     document.getElementById('sign-in-screen').classList.remove('hide');
+// }
 
 function GuardarPersona(){
     document.getElementById('log-in-form1').classList.add('hide');
@@ -547,11 +540,45 @@ function GuardarPersona(){
     cargarPersonas();
 }
 
+function CrearNuevaCuenta(){ //usuario
+  
+
+    let id= usuarios.length;
+    let info= document.getElementById('new-info').value;
+    let pssw=document.getElementById('new-pssw').value;
+
+    let usuario={
+        id1: id,
+        info: info,
+        pssw: pssw,
+        
+    }
+
+    fetch('/nuevousuario',{
+        method: "post",
+        body: JSON.stringify(usuario),
+        headers:{
+            "Content-type": "application/json; charset=UTF-8"
+        }}).then(res => {
+        console.log('Success:', res);
+        document.getElementById('new-acc-screen').classList.add('oculto');
+        document.getElementById('sign-in-screen').classList.remove('oculto');
+    })
+    .catch(error => console.error('Error:', error))
+    cargarUsuarios();
+
+    alert("Usuario Creado");
+
+    document.getElementById('log-in-form2').classList.add('hide');
+    document.getElementById('sign-in-screen').classList.remove('hide');
+}
+
+
 function Back(){
     document.getElementById('home').classList.remove('hide');
      document.getElementById('myModal').classList.add('hide');
      document.getElementById('profile-mm').innerHTML=``
-    console.log('jjjjjjjjjjjjjjjjj')
+    
 }
 
 
